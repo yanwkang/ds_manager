@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mr.mapper.TMallProductImageMapper" >
+  <resultMap id="BaseResultMap" type="com.mr.model.TMallProductImage" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="zy" property="zy" jdbcType="VARCHAR" />
+    <result column="shp_id" property="shpId" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, zy, shp_id, url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_mall_product_image
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_mall_product_image
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mr.model.TMallProductImage" >
+    insert into t_mall_product_image (Id, zy, shp_id, 
+      url)
+    values (#{id,jdbcType=INTEGER}, #{zy,jdbcType=VARCHAR}, #{shpId,jdbcType=INTEGER}, 
+      #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mr.model.TMallProductImage" >
+    insert into t_mall_product_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="zy != null" >
+        zy,
+      </if>
+      <if test="shpId != null" >
+        shp_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="zy != null" >
+        #{zy,jdbcType=VARCHAR},
+      </if>
+      <if test="shpId != null" >
+        #{shpId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mr.model.TMallProductImage" >
+    update t_mall_product_image
+    <set >
+      <if test="zy != null" >
+        zy = #{zy,jdbcType=VARCHAR},
+      </if>
+      <if test="shpId != null" >
+        shp_id = #{shpId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mr.model.TMallProductImage" >
+    update t_mall_product_image
+    set zy = #{zy,jdbcType=VARCHAR},
+      shp_id = #{shpId,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <insert id="insertSelectives" >
+	  	insert into t_mall_product_image ( shp_id, 
+	      url)
+	    values 
+	    <!-- 
+	    	collection：需要循环的对象名
+	    	item ：循环中使用的名称
+	    	separator ： 每次循环之间使用什么间隔
+	     -->
+	    <foreach item="imgs"  collection="list_imgs"
+	       separator=",">
+	       (  #{shp_id,jdbcType=INTEGER},#{imgs,jdbcType=VARCHAR})
+	  </foreach>
+  </insert>
+  
+</mapper>

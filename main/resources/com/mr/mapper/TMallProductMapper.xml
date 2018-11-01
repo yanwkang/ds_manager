@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mr.mapper.TMallProductMapper" >
+  <resultMap id="BaseResultMap" type="com.mr.model.TMallProduct" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="shp_mch" property="shpMch" jdbcType="VARCHAR" />
+    <result column="shp_tp" property="shpTp" jdbcType="VARCHAR" />
+    <result column="flbh1" property="flbh1" jdbcType="INTEGER" />
+    <result column="flbh2" property="flbh2" jdbcType="INTEGER" />
+    <result column="pp_id" property="ppId" jdbcType="INTEGER" />
+    <result column="chjshj" property="chjshj" jdbcType="TIMESTAMP" />
+    <result column="shp_msh" property="shpMsh" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, shp_mch, shp_tp, flbh1, flbh2, pp_id, chjshj, shp_msh
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_mall_product
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_mall_product
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mr.model.TMallProduct" >
+    insert into t_mall_product (Id, shp_mch, shp_tp, 
+      flbh1, flbh2, pp_id, 
+      chjshj, shp_msh)
+    values (#{id,jdbcType=INTEGER}, #{shpMch,jdbcType=VARCHAR}, #{shpTp,jdbcType=VARCHAR}, 
+      #{flbh1,jdbcType=INTEGER}, #{flbh2,jdbcType=INTEGER}, #{ppId,jdbcType=INTEGER}, 
+      #{chjshj,jdbcType=TIMESTAMP}, #{shpMsh,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" 
+	useGeneratedKeys="true" keyProperty="id"  	
+   parameterType="com.mr.model.TMallProduct" >
+    insert into t_mall_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="shpMch != null" >
+        shp_mch,
+      </if>
+      <if test="shpTp != null" >
+        shp_tp,
+      </if>
+      <if test="flbh1 != null" >
+        flbh1,
+      </if>
+      <if test="flbh2 != null" >
+        flbh2,
+      </if>
+      <if test="ppId != null" >
+        pp_id,
+      </if>
+      <if test="chjshj != null" >
+        chjshj,
+      </if>
+      <if test="shpMsh != null" >
+        shp_msh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shpMch != null" >
+        #{shpMch,jdbcType=VARCHAR},
+      </if>
+      <if test="shpTp != null" >
+        #{shpTp,jdbcType=VARCHAR},
+      </if>
+      <if test="flbh1 != null" >
+        #{flbh1,jdbcType=INTEGER},
+      </if>
+      <if test="flbh2 != null" >
+        #{flbh2,jdbcType=INTEGER},
+      </if>
+      <if test="ppId != null" >
+        #{ppId,jdbcType=INTEGER},
+      </if>
+      <if test="chjshj != null" >
+        #{chjshj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shpMsh != null" >
+        #{shpMsh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mr.model.TMallProduct" >
+    update t_mall_product
+    <set >
+      <if test="shpMch != null" >
+        shp_mch = #{shpMch,jdbcType=VARCHAR},
+      </if>
+      <if test="shpTp != null" >
+        shp_tp = #{shpTp,jdbcType=VARCHAR},
+      </if>
+      <if test="flbh1 != null" >
+        flbh1 = #{flbh1,jdbcType=INTEGER},
+      </if>
+      <if test="flbh2 != null" >
+        flbh2 = #{flbh2,jdbcType=INTEGER},
+      </if>
+      <if test="ppId != null" >
+        pp_id = #{ppId,jdbcType=INTEGER},
+      </if>
+      <if test="chjshj != null" >
+        chjshj = #{chjshj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shpMsh != null" >
+        shp_msh = #{shpMsh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mr.model.TMallProduct" >
+    update t_mall_product
+    set shp_mch = #{shpMch,jdbcType=VARCHAR},
+      shp_tp = #{shpTp,jdbcType=VARCHAR},
+      flbh1 = #{flbh1,jdbcType=INTEGER},
+      flbh2 = #{flbh2,jdbcType=INTEGER},
+      pp_id = #{ppId,jdbcType=INTEGER},
+      chjshj = #{chjshj,jdbcType=TIMESTAMP},
+      shp_msh = #{shpMsh,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getSpuList" resultType="tMallProduct">
+	   select 
+	    <include refid="Base_Column_List" />
+	    from t_mall_product
+	    where 
+	    flbh2 = #{flbh2}
+	    and
+	    pp_id = #{ppId}
+  </select>
+</mapper>

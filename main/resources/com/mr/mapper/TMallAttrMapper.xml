@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mr.mapper.TMallAttrMapper" >
+  <resultMap id="BaseResultMap" type="com.mr.model.TMallAttr" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="shxm_mch" property="shxmMch" jdbcType="VARCHAR" />
+    <result column="shfqy" property="shfqy" jdbcType="VARCHAR" />
+    <result column="flbh2" property="flbh2" jdbcType="INTEGER" />
+    <result column="chjshj" property="chjshj" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, shxm_mch, shfqy, flbh2, chjshj
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_mall_attr
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_mall_attr
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mr.model.TMallAttr" >
+    insert into t_mall_attr (Id, shxm_mch, shfqy, 
+      flbh2, chjshj)
+    values (#{id,jdbcType=INTEGER}, #{shxmMch,jdbcType=VARCHAR}, #{shfqy,jdbcType=VARCHAR}, 
+      #{flbh2,jdbcType=INTEGER}, #{chjshj,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" 
+  useGeneratedKeys="true" keyProperty="id"
+  parameterType="com.mr.model.TMallAttr" >
+    insert into t_mall_attr
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="shxmMch != null" >
+        shxm_mch,
+      </if>
+      <if test="shfqy != null" >
+        shfqy,
+      </if>
+      <if test="flbh2 != null" >
+        flbh2,
+      </if>
+      <if test="chjshj != null" >
+        chjshj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shxmMch != null" >
+        #{shxmMch,jdbcType=VARCHAR},
+      </if>
+      <if test="shfqy != null" >
+        #{shfqy,jdbcType=VARCHAR},
+      </if>
+      <if test="flbh2 != null" >
+        #{flbh2,jdbcType=INTEGER},
+      </if>
+      <if test="chjshj != null" >
+        #{chjshj,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mr.model.TMallAttr" >
+    update t_mall_attr
+    <set >
+      <if test="shxmMch != null" >
+        shxm_mch = #{shxmMch,jdbcType=VARCHAR},
+      </if>
+      <if test="shfqy != null" >
+        shfqy = #{shfqy,jdbcType=VARCHAR},
+      </if>
+      <if test="flbh2 != null" >
+        flbh2 = #{flbh2,jdbcType=INTEGER},
+      </if>
+      <if test="chjshj != null" >
+        chjshj = #{chjshj,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mr.model.TMallAttr" >
+    update t_mall_attr
+    set shxm_mch = #{shxmMch,jdbcType=VARCHAR},
+      shfqy = #{shfqy,jdbcType=VARCHAR},
+      flbh2 = #{flbh2,jdbcType=INTEGER},
+      chjshj = #{chjshj,jdbcType=TIMESTAMP}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <insert id="insertAttr" useGeneratedKeys="true" keyColumn="id" keyProperty="attr.id"> 
+  	insert into t_mall_attr (shxm_mch, 
+      flbh2, chjshj)
+    values ( #{attr.shxmMch,jdbcType=VARCHAR}, 
+      #{flbh2,jdbcType=INTEGER}, now())
+  </insert>
+  
+  <select id="getAttrList" resultMap="attrListMap">
+  		select attr.id as attr_id, attr.*, val.id as val_id, val.*  from t_mall_attr  attr,t_mall_value val 
+		where attr.id = val.shxm_id and attr.flbh2 =#{flbh2}
+  </select>
+  
+  <resultMap type="com.mr.model.ObjectTMallAttr" id="attrListMap"
+  	autoMapping="true">
+  		<result column="attr_id" property="id"/>
+  		<collection property="mallValues" ofType="com.mr.model.TMallValue" autoMapping="true">
+  			<result column="val_id" property="id"/>
+  		</collection>
+  </resultMap>
+  
+  
+  
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mr.mapper.TMallValueMapper" >
+  <resultMap id="BaseResultMap" type="com.mr.model.TMallValue" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="shxzh" property="shxzh" jdbcType="VARCHAR" />
+    <result column="shfqy" property="shfqy" jdbcType="VARCHAR" />
+    <result column="shxm_id" property="shxmId" jdbcType="INTEGER" />
+    <result column="shxzh_mch" property="shxzhMch" jdbcType="VARCHAR" />
+    <result column="chjshj" property="chjshj" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, shxzh, shfqy, shxm_id, shxzh_mch, chjshj
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_mall_value
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_mall_value
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mr.model.TMallValue" >
+    insert into t_mall_value (Id, shxzh, shfqy, 
+      shxm_id, shxzh_mch, chjshj
+      )
+    values (#{id,jdbcType=INTEGER}, #{shxzh,jdbcType=VARCHAR}, #{shfqy,jdbcType=VARCHAR}, 
+      #{shxmId,jdbcType=INTEGER}, #{shxzhMch,jdbcType=VARCHAR}, #{chjshj,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mr.model.TMallValue" >
+    insert into t_mall_value
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="shxzh != null" >
+        shxzh,
+      </if>
+      <if test="shfqy != null" >
+        shfqy,
+      </if>
+      <if test="shxmId != null" >
+        shxm_id,
+      </if>
+      <if test="shxzhMch != null" >
+        shxzh_mch,
+      </if>
+      <if test="chjshj != null" >
+        chjshj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shxzh != null" >
+        #{shxzh,jdbcType=VARCHAR},
+      </if>
+      <if test="shfqy != null" >
+        #{shfqy,jdbcType=VARCHAR},
+      </if>
+      <if test="shxmId != null" >
+        #{shxmId,jdbcType=INTEGER},
+      </if>
+      <if test="shxzhMch != null" >
+        #{shxzhMch,jdbcType=VARCHAR},
+      </if>
+      <if test="chjshj != null" >
+        #{chjshj,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mr.model.TMallValue" >
+    update t_mall_value
+    <set >
+      <if test="shxzh != null" >
+        shxzh = #{shxzh,jdbcType=VARCHAR},
+      </if>
+      <if test="shfqy != null" >
+        shfqy = #{shfqy,jdbcType=VARCHAR},
+      </if>
+      <if test="shxmId != null" >
+        shxm_id = #{shxmId,jdbcType=INTEGER},
+      </if>
+      <if test="shxzhMch != null" >
+        shxzh_mch = #{shxzhMch,jdbcType=VARCHAR},
+      </if>
+      <if test="chjshj != null" >
+        chjshj = #{chjshj,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mr.model.TMallValue" >
+    update t_mall_value
+    set shxzh = #{shxzh,jdbcType=VARCHAR},
+      shfqy = #{shfqy,jdbcType=VARCHAR},
+      shxm_id = #{shxmId,jdbcType=INTEGER},
+      shxzh_mch = #{shxzhMch,jdbcType=VARCHAR},
+      chjshj = #{chjshj,jdbcType=TIMESTAMP}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertValue" >
+	insert into t_mall_value (shxzh, shxm_id, shxzh_mch, chjshj)
+    values 
+    <foreach collection="list" item="val" separator=",">
+	    ( #{val.shxzh,jdbcType=VARCHAR},  #{shxmId,jdbcType=INTEGER},
+	     #{val.shxzhMch,jdbcType=VARCHAR},  now())
+    </foreach>
+  </insert>
+  
+  
+</mapper>
